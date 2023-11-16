@@ -4,7 +4,8 @@ pipeline {
     stages {
         stage('Backup') {
             steps {
-                sh 'sqlite3 Employees.db ".mode insert" ".dump" | grep "^INSERT INTO" > backup.sql'
+                sh 'sqlite3 Employees.db ".mode insert" ".output backupAux.sql" ".dump" ".quit"'
+                sh 'grep "^INSERT INTO" backupAux.sql > backup.sql'
             }
         }
         
